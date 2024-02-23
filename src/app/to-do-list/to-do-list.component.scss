@@ -2,3 +2,15 @@
 .hide{
   display: none;
 }
+.enable{
+  color: #005bff;
+  font-style: italic;
+  font-weight: bold;
+
+}
+.disable{
+  color: #666666;
+  font-weight: lighter;
+  background-color: burlywood;
+  text-decoration: line-through;
+}
