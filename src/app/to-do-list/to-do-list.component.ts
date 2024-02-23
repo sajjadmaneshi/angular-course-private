@@ -22,21 +22,50 @@ export class ToDoListComponent{
   allowedAddNewTask=false;
   taskName='';
   showNewTask=false;
-  twoWayBinding='hello'
+  twoWayBinding='hello';
+  tasks:{id:number,name:string,status:'enable'|'disable',importance:string}[]=[];
+  taskStatus!:'enable'|'disable';
+  static id=1;
+  importance!: string;
   constructor() {
     setTimeout(()=>{
       this.allowedAddNewTask=true;
-    },5000)
+    },5000);
+
   }
 
-  addTask(event:any){
+  addTask(){
     //
     // console.log('on button click')
     // console.log(event)
-    this.showNewTask=true;
+    // this.showNewTask=true;
+    if(this.taskName){
+      const id=Math.random();
+
+      this.tasks.push({id,name:this.taskName,status:this.returnTaskStatus(id),importance:this.importance});
+      // ToDoListComponent.id++;
+    }
+
+  }
+
+  returnTaskStatus(id:number){
+   if(id>0.5){
+     return 'enable'
+   }else {
+     return 'disable'
+   }
   }
 
   sendTaskName(event:any){
     this.taskName=event.target.value
+  }
+
+ myTrack(index:number,item:{id:number,name:string}) {
+
+    return item.id
+  }
+
+  test($event: MouseEvent) {
+
   }
 }

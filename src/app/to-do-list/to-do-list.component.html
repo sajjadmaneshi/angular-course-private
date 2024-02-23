@@ -1,20 +1,75 @@
 <div class="container mt-5">
   <h1>to do list</h1>
-<!--  <label>task name</label>-->
-<!--<input class="form-control mb-3"  (input)="sendTaskName($event)">-->
-  <label>two-way</label>
-<input class="form-control mb-3"  [(ngModel)]="taskName">
-  <button class="btn btn-success"
-          [disabled]="!allowedAddNewTask"
-          [class.btn-danger]="!allowedAddNewTask"
-          (click)="addTask($event)"
-  >add task</button>
-  <h1>{{changeEvent}}</h1>
-  <h1 [class.hide]="!showNewTask">{{'' + taskName}}</h1>
-  <h1 >{{twoWayBinding}}</h1>
-  <app-to-do-list-item></app-to-do-list-item>
-  <app-to-do-list-item></app-to-do-list-item>
-  <app-to-do-list-item></app-to-do-list-item>
-  <app-to-do-list-item></app-to-do-list-item>
+<!--&lt;!&ndash;  <label>task name</label>&ndash;&gt;-->
+<!--&lt;!&ndash;<input class="form-control mb-3"  (input)="sendTaskName($event)">&ndash;&gt;-->
+<!--  <label>two-way</label>-->
+<!--<input class="form-control mb-3"  [(ngModel)]="taskName">-->
+<!--  <button class="btn btn-success"-->
+<!--          [disabled]="!allowedAddNewTask"-->
+<!--          [class.btn-danger]="!allowedAddNewTask"-->
+<!--          (click)="addTask($event)"-->
+<!--  >add task</button>-->
+<!--  <h1>{{changeEvent}}</h1>-->
+<!--  <h1 [class.hide]="!showNewTask">{{'' + taskName}}</h1>-->
+<!--  <h1 >{{twoWayBinding}}</h1>-->
+  <div class="d-flex">
+    <input class="form-control mb-3 flex-grow-1" [(ngModel)]="taskName" >
+    <select  [(ngModel)]="importance" class="form-control mx-3">
+      <option value="1">low</option>
+      <option value="2">middle</option>
+      <option value="3">high</option>
+    </select>
+    <button class="btn btn-success mb-3" (click)="addTask()">addTask</button>
+  </div>
+
+
+  <h1 class="text-danger" *ngIf="tasks.length===0;else full">no task Found</h1>
+
+<!--  <div *ngIf="tasks.length>0">-->
+
+<!--    &lt;!&ndash;  <app-to-do-list-item></app-to-do-list-item>&ndash;&gt;-->
+<!--    &lt;!&ndash;  <app-to-do-list-item></app-to-do-list-item>&ndash;&gt;-->
+<!--    &lt;!&ndash;  <app-to-do-list-item></app-to-do-list-item>&ndash;&gt;-->
+<!--  </div>-->
+  <ng-template #full>
+<!--    <app-to-do-list-item ></app-to-do-list-item>-->
+<!--    <div class="alert alert-success w-100 d-flex justify-content-between mb-3"-->
+<!--         [ngClass]="{'enable':task.status==='enable',-->
+<!--         'disable':task.status==='disable'}"-->
+
+<!--         *ngFor="let task of tasks;let a=index; trackBy:myTrack"-->
+<!--    >-->
+<!--&lt;!&ndash;      <h1>{{myTrack(a,task)}}</h1>&ndash;&gt;-->
+<!--      <h3>{{a}}</h3>-->
+<!--      <h3 [ngStyle]="{'color':returnTaskStatus(task.id),-->
+<!--                      'font-weight':task.id>0.5?'bolder':'lighter'}" >{{task.id}}</h3>-->
+
+<!--      <h3>{{task.name}}</h3>-->
+<!--      <button class="btn btn-danger">delete</button>-->
+<!--    </div>-->
+
+
+    <div class="alert alert-success w-100 d-flex justify-content-between mb-3"
+         [ngClass]="[task.status]"
+
+         *ngFor="let task of tasks;let a=index; trackBy:myTrack"
+    >
+      <!--      <h1>{{myTrack(a,task)}}</h1>-->
+      <h3>{{a}}</h3>
+<!--      <h3 [ngStyle]="{'color':returnTaskStatus(task.id),-->
+<!--                      'font-weight':task.id>0.5?'bolder':'lighter'}" >{{task.id}}</h3>-->
+      <h3 >{{task.id}}</h3>
+      <span [ngSwitch]="task.importance">
+              <h6 *ngSwitchCase="'1'" class="text-success">{{task.importance}}</h6>
+              <h3 *ngSwitchCase="'2'" class="text-warning">{{task.importance}}</h3>
+              <h1 *ngSwitchCase="'3'" class="text-danger">{{task.importance}}</h1>
+         <h1 *ngSwitchDefault class="text-danger">1</h1>
+      </span>
+
+
+      <h3>{{task.name}}</h3>
+      <button class="btn btn-danger">delete</button>
+    </div>
+  </ng-template>
 
 </div>
