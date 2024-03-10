@@ -1,4 +1,8 @@
 import {Component} from "@angular/core";
+import {ToDoListModel} from "./models/to-do-list.model";
+import {TaskStatusEnum} from "./models/task-status.enum";
+import {TaskImportanceEnum} from "./models/task-importance.enum";
+import {ToDoListModelClass} from "./models/to-do-list-model-class";
 
 
 @Component(
@@ -17,16 +21,19 @@ import {Component} from "@angular/core";
 
   }
 )
-export class ToDoListComponent{
-  changeEvent='hello'
+export class ToDoListComponent  {
+
   allowedAddNewTask=false;
   taskName='';
-  showNewTask=false;
-  twoWayBinding='hello';
-  tasks:{id:number,name:string,status:'enable'|'disable',importance:string}[]=[];
-  taskStatus!:'enable'|'disable';
+  tasks:ToDoListModelClass[]=[];
+  importance:TaskImportanceEnum= TaskImportanceEnum.LOW;
+
+  importanceEnum=TaskImportanceEnum;
+  taskStatusEnum=TaskStatusEnum;
+
+  findTaskName=''
+
   static id=1;
-  importance!: string;
   constructor() {
     setTimeout(()=>{
       this.allowedAddNewTask=true;
@@ -34,30 +41,51 @@ export class ToDoListComponent{
 
   }
 
+
+
   addTask(){
-    //
-    // console.log('on button click')
-    // console.log(event)
-    // this.showNewTask=true;
     if(this.taskName){
       const id=Math.random();
+      const newTask={
+        id:ToDoListComponent.id,
+        name:this.taskName,
+        status:this.returnTaskStatus(id),
+        importance:this.importance,
+        generateTask(): any {
+        }
+      } as ToDoListModel;
+      // const newTask2={
+      //   id,
+      //   name:this.taskName,
+      //   status:this.returnTaskStatus(id),
+      //   importance:this.importance,
+      // }as ToDoListModelClass;
+      const newTask2=new
+      ToDoListModelClass(ToDoListComponent.id,this.taskName,this.returnTaskStatus(id),this.importance);
 
-      this.tasks.push({id,name:this.taskName,status:this.returnTaskStatus(id),importance:this.importance});
-      // ToDoListComponent.id++;
+
+      this.tasks.push(newTask2);
+     // const task= this.tasks.find((x)=>x.id===2);
+     // if(task){
+     //   console.log(task.name);
+     // }
+
+      ToDoListComponent.id++;
     }
 
   }
 
   returnTaskStatus(id:number){
-   if(id>0.5){
-     return 'enable'
-   }else {
-     return 'disable'
-   }
+
+    return id>0.5 ?TaskStatusEnum.ENABLE:TaskStatusEnum.DISABLE
   }
 
   sendTaskName(event:any){
     this.taskName=event.target.value
+  }
+
+  deleteTask(position:number){
+    this.tasks.splice(position,1);
   }
 
  myTrack(index:number,item:{id:number,name:string}) {
@@ -65,7 +93,14 @@ export class ToDoListComponent{
     return item.id
   }
 
-  test($event: MouseEvent) {
 
+  protected readonly TaskImportanceEnum = TaskImportanceEnum;
+
+  onDeleteTask($event: number) {
+    console.log($event)
+    const taskIndex=this.tasks.findIndex(x=>x.id===$event);
+    if(taskIndex!=-1){
+      this.tasks.splice(taskIndex,1)
+    }
   }
 }
