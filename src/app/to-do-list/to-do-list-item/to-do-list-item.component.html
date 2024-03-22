@@ -1,8 +1,7 @@
 <div class="alert alert-success w-100 d-flex justify-content-between mb-3"
-     [ngClass]="[task.status===taskStatusEnum.ENABLE?'enable':'disable']"
->
+     [ngClass]="[task.status===taskStatusEnum.ENABLE?'enable':'disable']">
+  <h3>{{task.id}}</h3>
 
-  <h3 >{{task.id}}</h3>
   <span [ngSwitch]="task.importance">
               <h6 *ngSwitchCase="TaskImportanceEnum.LOW" class="text-success">{{task.importance}}</h6>
               <h3 *ngSwitchCase="TaskImportanceEnum.MIDDLE" class="text-warning">{{task.importance}}</h3>
@@ -10,7 +9,10 @@
          <h1 *ngSwitchDefault class="text-danger">1</h1>
       </span>
 
-
-  <h3>{{task.name}}</h3>
+<app-task-name [name]="task.name"></app-task-name>
+  <ng-content select="#before"></ng-content>
   <button class="btn btn-danger" (click)="onDeleteTask(task.id)">delete</button>
+  <ng-content select="h1"></ng-content>
+  <ng-content select=".after"></ng-content>
+
 </div>

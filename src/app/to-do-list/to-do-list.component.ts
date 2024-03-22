@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, ElementRef, ViewChild} from "@angular/core";
 import {ToDoListModel} from "./models/to-do-list.model";
 import {TaskStatusEnum} from "./models/task-status.enum";
 import {TaskImportanceEnum} from "./models/task-importance.enum";
@@ -17,11 +17,13 @@ import {ToDoListModelClass} from "./models/to-do-list-model-class";
     // styles:[
     //   `h2{
     //     color: red;
-    //   }`
+    //   }
 
   }
 )
 export class ToDoListComponent  {
+
+  @ViewChild('inputElement') inputElement!:ElementRef;
 
   allowedAddNewTask=false;
   taskName='';
@@ -32,7 +34,7 @@ export class ToDoListComponent  {
   taskStatusEnum=TaskStatusEnum;
 
   findTaskName=''
-
+  task=new ToDoListModelClass(0,'task1',TaskStatusEnum.ENABLE, TaskImportanceEnum.LOW)
   static id=1;
   constructor() {
     setTimeout(()=>{
@@ -73,6 +75,8 @@ export class ToDoListComponent  {
       ToDoListComponent.id++;
     }
 
+
+
   }
 
   returnTaskStatus(id:number){
@@ -86,6 +90,7 @@ export class ToDoListComponent  {
 
   deleteTask(position:number){
     this.tasks.splice(position,1);
+
   }
 
  myTrack(index:number,item:{id:number,name:string}) {

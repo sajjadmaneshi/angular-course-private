@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ViewEncapsulation} from '@angular/core';
 import {TaskImportanceEnum} from "../models/task-importance.enum";
 import {TaskStatusEnum} from "../models/task-status.enum";
 import {ToDoListModelClass} from "../models/to-do-list-model-class";
@@ -7,6 +7,7 @@ import {ToDoListModelClass} from "../models/to-do-list-model-class";
   selector: 'app-to-do-list-item',
   templateUrl: './to-do-list-item.component.html',
   styleUrls: ['./to-do-list-item.component.scss']
+
 })
 export class ToDoListItemComponent {
   @Input('taskData') task!:ToDoListModelClass;

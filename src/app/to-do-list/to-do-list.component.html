@@ -1,9 +1,11 @@
 <div class="container mt-5">
+  <p>test</p>
   <h1>to do list</h1>
 
   <div class="d-flex">
     <label class="mb-3">task name</label>
-    <input class="form-control mb-3 flex-grow-1 mx-3" [(ngModel)]="taskName" >
+    <input class="form-control mb-3 flex-grow-1 mx-3" [(ngModel)]="taskName">
+    <input class="form-control mb-3 flex-grow-1 mx-3" #inputElement >
     <button class="btn btn-success mb-3" (click)="addTask()">addTask</button>
   </div>
   <div class="mb-3">
@@ -13,6 +15,7 @@
       <option [value]="importanceEnum.MIDDLE">middle</option>
       <option [value]="importanceEnum.HIGH">high</option>
     </select>
+
   </div>
 
 
@@ -20,8 +23,18 @@
 
 
   <ng-template #full >
+    <app-to-do-list-item [taskData]="task">
+      <h1 class="text-danger">danger</h1>
+    </app-to-do-list-item>
+
+
     <app-to-do-list-item
-      *ngFor="let task of tasks;let i=index; trackBy:myTrack" [taskData]="task" (delete)="onDeleteTask($event)" ></app-to-do-list-item>
+      *ngFor="let task of tasks;let i=index; trackBy:myTrack" [taskData]="task" (delete)="onDeleteTask($event)" >
+
+      <p id="before">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto aspernatur assumenda dicta dolorem, dolores eius et harum mollitia, nam necessitatibus omnis perferendis possimus quasi quo sit, velit voluptatem. Illum, non.</p>
+      <h1>salam</h1>
+      <button class="btn btn-success after"></button>
+    </app-to-do-list-item>
   </ng-template>
 
 </div>
